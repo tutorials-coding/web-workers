@@ -10,7 +10,7 @@ self.onconnect = function (e) {
     const num = e.data;
     if (Number.isInteger(parseInt(num))) {
       const result = getNthFobonacciNumber(num);
-      port.postMessage(result);
+      port.postMessage({ connectedTimes, result });
     } else {
       port.postMessage("Is not a number");
       throw new Error("Is not a number");
