@@ -1,12 +1,12 @@
-import GetNthFibonacciNumberWorker from "worker-loader!./workers/get-nth-fibonacci-number.worker.js";
-
 import "./styles/style.scss";
 
 const btn = document.getElementById("calc-btn");
 const input = document.getElementById("nth-input");
 const result = document.getElementById("result-el");
 
-const worker = new GetNthFibonacciNumberWorker();
+const worker = new Worker("./workers/get-nth-fibonacci-number.worker.js", {
+  type: "module",
+});
 worker.addEventListener("message", (e) => {
   result.innerHTML = e.data;
 });

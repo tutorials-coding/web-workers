@@ -29,11 +29,10 @@
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.10.1",
-    "worker-loader": "^3.0.5"
+    "worker-plugin": "^5.0.0"
   },
   "scripts": {
-    "start": "webpack-dev-server --open --config=config/webpack.dev.js",
-    "build": "webpack --config=config/webpack.prod.js"
+    "start": "webpack-dev-server --open --config=config/webpack.dev.js"
   },
   "dependencies": {
     "@babel/polyfill": "^7.7.0",

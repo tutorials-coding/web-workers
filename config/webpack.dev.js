@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const WorkerPlugin = require("worker-plugin");
 
 module.exports = {
   entry: {
@@ -58,14 +59,6 @@ module.exports = {
           },
         },
       },
-      {
-        test: "/.worker.js$/",
-        use: [
-          {
-            loader: "worker-loader",
-          },
-        ],
-      },
     ],
   },
   plugins: [
@@ -76,6 +69,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       filename: "index.html",
+    }),
+    new WorkerPlugin({
+      sharedWorker: true,
+      worker: true,
     }),
   ],
 };
