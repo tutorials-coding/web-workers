@@ -1,3 +1,11 @@
+import {
+  initWorker as initPromisifiedWorker,
+  initWorkerFn,
+} from "./promisified-worker";
+
+import { getNthFobonacciNumber } from "./helpers/get-nth-fibonacci-number";
+
+import { button, input, result } from "./elements";
 import "./styles/style.scss";
 
 // Shared worker
@@ -6,7 +14,7 @@ const initSharedWorker = () => {
   const sharedWorker = new SharedWorker(
     "./workers/get-nth-fibonacci-number.shared-worker.js",
     {
-      name: "Shared Worker Example",
+      name: "shared-worker-example",
       type: "module",
     }
   );
@@ -48,11 +56,14 @@ const runWorker = (n) => {
   worker.postMessage(n);
 };
 
-// app
+// promisified
 
-const btn = document.getElementById("calc-btn");
-const input = document.getElementById("nth-input");
-const result = document.getElementById("result-el");
+const runPromisifiedWorker = initPromisifiedWorker(
+  "./workers/get-nth-fibonacci-number.worker.js"
+);
+
+const runPromisifiedWorkerFn = initWorkerFn(getNthFobonacciNumber);
+// app
 
 let n = null;
 
@@ -60,8 +71,17 @@ input.addEventListener("change", (e) => {
   n = e.target.value;
 });
 
-btn.addEventListener("click", (e) => {
+button.addEventListener("click", (e) => {
   result.innerHTML = "processing...";
   // runSharedWorker(n);
-  runWorker(n);
+  // runWorker(n);
+
+  // runPromisifiedWorker(n)
+  runPromisifiedWorkerFn(n)
+    .then((value) => {
+      result.innerHTML = value;
+    })
+    .catch((error) => {
+      result.innerHTML = `message: ${error.message}; filename: ${error.filename}; line: ${error.lineno}`;
+    });
 });
