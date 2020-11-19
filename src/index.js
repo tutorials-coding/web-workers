@@ -1,3 +1,4 @@
+import dedicatedWorkerUrl from "worker-plugin/loader!./workers/get-nth-fibonacci-number.worker.js";
 import { getNthFobonacciNumber } from "./helpers/get-nth-fibonacci-number";
 import { initWorker, initWorkerFn } from "./promisified-worker";
 
@@ -28,9 +29,9 @@ const dedicatedWorker = initFibonacciDedicatedWorker(
 );
 
 // promisified
-const runPromisifiedWorker = initWorker(
-  "./workers/get-nth-fibonacci-number.worker.js"
-);
+
+const runPromisifiedWorker = initWorker(dedicatedWorkerUrl);
+
 const runPromisifiedWorkerFn = initWorkerFn(getNthFobonacciNumber);
 
 // app
